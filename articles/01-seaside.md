@@ -1,5 +1,5 @@
 title: Strengths and Weaknesses of Seaside
-date: 2010-08-04
+date: 2010-08-25 19:14
 
 *This is an excerpt from my bachelor thesis.*
 
