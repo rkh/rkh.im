@@ -1,0 +1,23 @@
+title: My Humble Blog
+date: 2010/08/04, 18:21
+
+%h2 Short Intro
+:markdown
+  <img src='http://www.gravatar.com/avatar/5c2b452f6eea4a6d84c105ebd971d2a4?s=100' />
+  This is my new blog. I will use it for dumping articles. Expect a lot of Ruby related topics.
+  But who am I anyways? I'm currently a student at [Hasso Platt&shy;ner Institute](http://www.hpi.uni-potsdam.de/),
+  [University Of Potsdam](http://www.uni-potsdam.de/). In my spare time I work as a software engineer at
+  [finnlabs](http://www.finn.de/).
+  
+  I [tweet](http://twitter.com/konstantinhaase) mainly about tech stuff.
+  More non-technical micro-blogging can also be found on [Facebook](http://www.facebook.com/profile.php?id=100000311509578).
+  Most of my code is on [GitHub](http://github.com/rkh), including [this blog's source](http://github.com/rkh/rkh.im).
+  I have been contributing to various Open Source projects, including (but not limited to) [Rubinius](http://rubini.us),
+  [Sinatra](http://www.sinatrarb.com/) and [Rack](http://rack.rubyforge.org/). I also do some infrequent
+  [photography](http://flickr.com/khaase).
+
+%h2 Articles
+- articles.reverse_each do |article|
+  %article
+    .date= article.date.strftime("%Y/%m/%d")
+    %a{:href => article.url}= article.title

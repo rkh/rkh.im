@@ -1,0 +1,223 @@
+@import "compass/css3"
+@import "compass/utilities"
+
+article, header, footer, section, nav, aside
+  display: block
+
+@media print
+  body
+    font-family: "IM Fell English", Georgia, serif !important
+
+  aside, nav, .comments, .gist-meta, .noprint
+    display: none !important
+
+  .gist, .gist-file, .gist-data
+    border: none !important
+    font-size: 11pt
+
+  a:link, a:visited
+    text-decoration: none
+    color: #000
+    &:after
+      content: " (" attr(href) ")"
+      font-family: Monaco, "Courier New", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", monospace
+      font-size: 10pt
+    &[href^="/"]:after
+      content: " (http://rkh.im" attr(href) ")"
+    &[href^="mailto:k.haase@finn.de"]:after
+      content: " (k.haase@finn.de)"
+    &.noprintlink:after
+      content: ""
+
+  time.timeago[title]
+    &:after
+      content: ", " attr(title)
+
+  article
+    line-height: 1.25
+    text-align: justify
+    font-size: 14pt
+    h1, h2
+      page-break-after: avoid !important
+    h2
+      font-family: "IM Fell English SC" !important
+    p
+      margin-bottom: 0
+      page-break-before: auto
+      page-break-after: auto
+    p + p
+      text-indent: 2em
+      margin-top: 0
+      .gist
+        margin-top: 1em
+        text-indent: 0
+    img
+      display: block
+      float: left
+      padding: 1em
+        top: 0
+        left: 0
+
+    .license
+      page-break-inside: avoid !important
+      page-break-before: avoid !important
+
+    article .date
+      display: inline-block
+      font-size: 12pt
+      min-width: 5em
+
+@media screen
+  $small-margin:  20px
+  $big-margin:    144px
+  $avg-margin:    72px
+  $outer-margin:  50px
+  $min-width:     200px
+  $dark:          #333
+  $darker:        #222
+  $indent:        2em
+
+  body
+    +linear-gradient(color-stops(#f3f3f3 40%, #ccc 80%, #aaa))
+    background:
+      color: #f3f3f3
+      attachment: fixed
+    font:
+      family: "IM Fell English", serif
+      size: 16px
+    padding: $small-margin $outer-margin
+    min-width: $min-width + (2*$outer-margin)
+    margin: 0
+    color: $darker
+
+  h1, h2
+    +text-shadow(rgba(0,0,0,0.5), 1px, 1px, 3px)
+    color: $darker
+
+  a
+    color: #369
+    text-decoration: none
+    &:hover, &:focus
+      text-decoration: underline
+    &:active
+      color: #369
+    &:visited
+      color: #737
+    img
+      border: none
+
+  article[data-source]
+    //+linear-gradient(color-stops(#f3f3f3 0px, #fff $avg-margin))
+    +box_shadow(rgba(0,0,0,0.4), 3px, 3px, 3px)
+    background-color: #fff
+    max-width: 500px
+    min-width: $min-width
+    min-height: 300px
+    margin: auto
+    line-height: 1.25
+    padding: $small-margin
+      right: $big-margin
+      left: $avg-margin
+
+    nav, aside
+      float: right
+      text-align: center
+      position: relative
+      right: -$big-margin
+      margin-left: -$big-margin
+      width: $big-margin - $small-margin
+      clear: right
+  
+    aside
+      top: 0
+
+    nav
+      +linear-gradient(color-stops(#777, #333))
+      +border-bottom-left-radius(15px)
+      +text-shadow(#000, 1px, 1px, 2px)
+      background-color: #555
+      top: -$small-margin
+      border:
+        left: solid 1px $dark
+        bottom: solid 1px $dark
+      //line-height: 20px
+      font:
+        family: Arial, sans-serif
+        size: 14px
+      color: #777
+      .link
+        padding: 0 5px
+        opacity: 0.5
+      a
+        color: #999
+      a:hover
+        opacity: 0.9
+        text-decoration: none
+
+    h1
+      font-size: 36px
+      margin-bottom: 0px
+    h2
+      font:
+        size: 24px
+        family: "IM Fell English SC", "IM Fell English", serif
+      text-align: left
+      line-height: 0.9
+    h3, h4, h5, h6
+      font-size: 16px
+
+    header  
+      text-align: left
+      font-size: 14px
+
+    section.comments
+      margin-top: $small-margin
+      padding-top: $small-margin
+
+    section.content
+      text-align: justify
+  
+      code
+        font-size: 12px
+  
+      p
+        margin-bottom: 0
+  
+      p + p
+        text-indent: $indent
+        margin-top: 0
+        .gist
+          margin-top: 1em
+          text-indent: 0
+      
+      img
+        +box_shadow(rgba(0,0,0,0.4), 2px, 1px, 2px)
+        float: left
+        display: block
+        margin:
+          top: 0
+          left: 0
+          right: 1em
+          bottom: 2px
+        border: solid 1px $darker
+
+      h1, h2
+        clear: left
+  
+      article
+        .date
+          display: inline-block
+          font-size: 14px
+          min-width: 80px
+
+  .gist, .gist-file
+    font-size: 12px
+    .gist-meta
+      font-size: 9px !important
+
+.license
+  margin-top: 2em
+  font-family: Helvetica, Arial, Freesans, Clean, sans-serif
+  font-size: 8pt
+  a:after
+    font-size: 8pt !important

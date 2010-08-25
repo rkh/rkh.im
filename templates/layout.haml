@@ -1,0 +1,20 @@
+!!! 5
+%html{:lang => 'en'}
+  / Hello dear source reader, feel free to wander around.
+  %head
+    / I *love* UTF-8
+    %meta{:charset => "utf-8"}
+    %title #{"#{title} - " if title}rkh.im
+    %script{:src => "/articles.js?#{tag = Base64.encode64(Blog.etag)}", :type => "text/javascript"}
+    %script{:src => "/blog.js?#{tag}", :type => "text/javascript"}
+    %link{:href => "/blog.css?#{tag}", :rel => "stylesheet", :type => "text/css"}
+
+  %body.hyphenate
+    / IE 9 supports CSS3/HTML5, or at least that's what I'm told.
+    /[if lt IE 9]
+      %script(type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js")
+      #prompt
+      :javascript
+        window.attachEvent("onload", function() { CFInstall.check({ mode: "inline", node: "prompt" })});
+
+    .blog= yield
