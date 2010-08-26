@@ -16,12 +16,6 @@
     %p
       %a{:href => "http://feeds.feedburner.com/rkh", :title => "Subscribe to my feed", :rel => "alternate", :type => "application/rss+xml"}
         %img{:src => "/images/feed-icon.png", :alt => "Subscribe to my feed"}
-    - if slug
-      %p
-        %a{:href => "http://twitter.com/share", :class => "twitter-share-button",
-          "data-count" => "vertical", "data-via" => "konstantinhaase",
-          "data-url" => "http://rkh.im#{url}", "data-text" => title }
-          Tweet
 
   %header
     %h1{:"xmlns:dc" => "http://purl.org/dc/elements/1.1/", :property => "dc:title"}= title
