@@ -68,7 +68,7 @@ module ::Blog
 
   def load_articles(env = {})
     return mutex.synchronize { load_articles } if env["rack.multithread"]
-    system 'git pull'
+    system 'git pull' unless env.empty?
     @secret = File.read('.secret').strip
     not_found = Page.new("templates/not_found.haml", nil, 404)
     @map = Hash.new { not_found }
