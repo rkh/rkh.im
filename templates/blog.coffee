@@ -112,8 +112,8 @@ loadScript 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', ->
             event.preventDefault()
 
       preparePage = ->
-        # twitter buttons
-        loadScript 'http://platform.twitter.com/widgets.js'
+        ## twitter buttons
+        #loadScript 'http://platform.twitter.com/widgets.js'
         $('p > a[href^="http://gist.github.com/"]:only-child').each (index, element) ->
           loadEmbedded "#{element.href}.js?file=#{element.innerHTML}", (gist) ->
             wrapper = $(element).parent()
