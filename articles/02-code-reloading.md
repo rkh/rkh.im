@@ -1,8 +1,6 @@
 date: 2010-08-30 19:06:04
 title: Reloading Ruby Code
 
-*I apologize in advance for this blog post being somewhat long.*
-
 As the core of my [Ruby Summer Of Code](http://www.rubysoc.org) project, I have partly rewritten `ActiveSupport::Dependencies`. I will give an introduction to common reloading strategies and their implementation and discuss my changes to `Dependencies`. Even though this part of ActiveSupport is hidden away and not well known, all Rails developers rely on its proper functioning, as it is responsible for autoloading and reloading Ruby code. It is also responsible for producing error messages like "A copy of Something has been removed from the module tree but is still active!" or "Object is not missing constant Something!". But before focusing on `Dependencies`, let's talk about the topic in general.
 
 In this article I will focus on reloading code, since autoloading code is rather simple: You define a `const_missing` hook, which is triggered whenever an undefined constant is used. Map the constant name to a path (with `Dependencies`, `Foo::BarBlah` will be mapped to `foo/bar_blah`) and search for that file inside a list of directories, in that case `Dependencies.autoload_paths` and, for files that should be autoloaded but not reloaded, `Dependencies.autoload_once_paths`. Some other implementations use Ruby's `$LOAD_PATHS`, which has the advantage of simply trying to `require 'foo/bar_blah'` instead of having to search for a matching file by hand. That way autoloading constants from gems or other formats (i.e. `foo.so` instead of `foo.rb`) just works. On the other hand this may easily lead to loading other files than intended and reloading files that should not be reloaded.
