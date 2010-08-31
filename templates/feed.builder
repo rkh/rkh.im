@@ -13,7 +13,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
       xml.published article.date.iso8601
       xml.updated article.date.iso8601
       xml.author { xml.name 'Konstantin Haase' }
-      xml.content article.source, "type" => "html"
+      xml.content article.source.gsub(%r{/20\d\d/\d\d/}, 'http://rkh.im\0'), "type" => "html"
     end
   end
 end
