@@ -105,7 +105,7 @@ loadScript 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', ->
             switchTo document.location.pathname if path and path != '' and document.location.pathname != path
 
           # hook into all links
-          $('a[href^=/]').live 'click', (event) ->
+          $('a[href^="/"]').live 'click', (event) ->
             path = this.getAttribute("href")
             history.pushState true, titles[path], path
             switchTo path
