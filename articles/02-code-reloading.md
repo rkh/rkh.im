@@ -5,7 +5,7 @@ As the core of my [Ruby Summer Of Code](http://www.rubysoc.org) project, I have 
 
 In this article I will focus on reloading code, since autoloading code is rather simple: You define a `const_missing` hook, which is triggered whenever an undefined constant is used. Map the constant name to a path (with `Dependencies`, `Foo::BarBlah` will be mapped to `foo/bar_blah`) and search for that file inside a list of directories, in that case `Dependencies.autoload_paths` and, for files that should be autoloaded but not reloaded, `Dependencies.autoload_once_paths`. Some other implementations use Ruby's `$LOAD_PATHS`, which has the advantage of simply trying to `require 'foo/bar_blah'` instead of having to search for a matching file by hand. That way autoloading constants from gems or other formats (i.e. `foo.so` instead of `foo.rb`) just works. On the other hand this may easily lead to loading other files than intended and reloading files that should not be reloaded.
 
-[simple\_autoloader.rb](http://gist.github.com/533770)
+<script src="https://gist.github.com/533770.js?file=simple_autoloader.rb"></script>
 
 You might have already noticed that such an autoloading approach is working on two different levels: Constants and files. The artificial mapping from constants to files is present in most Ruby project, but it is not a low-level Ruby feature. Neither is code reloading. However, especially in Rails-land, reloading is assumed to just work. That is impossible by design. But there are a couple of different approaches trying to get you as close as possible. The key design decisions are *when* to reload *what* code and *how* to do that. Of these decisions, when to reload is the easiest one, as it does not bring any implications for the code that is reloaded. The reloader can be triggered on any file changes or on specified points/events in your program flow, or a combination of the two. In a web app, you probably only want to reload code on a new request. What code you should reload heavily depends on how you are reloading code.
 
@@ -13,35 +13,35 @@ In the following I will mainly focus on reloading [Rack](http://rack.rubyforge.o
 
 ## Abusing Open Classes
 
-[open\_class.rb](http://gist.github.com/544919)
+<script src="https://gist.github.com/544919.js?file=open_class.rb"></script>
 
 The concept of Ruby's [open classes](http://rubylearning.com/satishtalim/ruby_open_classes.html) is demonstrated in the above example. You might already know this technique, especially either from [monkey-patching](http://www.infoq.com/articles/ruby-open-classes-monkeypatching) other modules/classes or from using modules as [namespaces](http://ruby-doc.org/docs/ProgrammingRuby/html/tut_modules.html). It can also be used for reloading. About anything that can be defined in Ruby, can also be redefined at runtime.
 
 Imagine you have a Rack application called `Foo` in `foo.rb`. If you load `foo.rb` twice, then the definition of `Foo` monkey-patches itself. If one method was changed in-between the first and the second loading of `foo.rb`, the second version will override the first. If a method did not change, it will be overridden with an unchanged version, which is about the same as not overriding it. Well, except for the fact that it will invalidate any method caches and revert any inlining which might have occurred thus far. But the method's implementation will remain the same. This is not only extremely simple, but as it turns out also rather fast. If you want to reload `foo.rb` on every request you could set up a simple middleware for that:
 
-[reload\_foo.ru](http://gist.github.com/544921)
+<script src="https://gist.github.com/544921.js?file=reload_foo.ru"></script>
 
 However, this is not `require`-friendly. Even if `foo.rb` requires `bar.rb`, only `foo.rb` will be reloaded. One solution would be to use `load` instead of `require`. However, we want to keep the reloader as invisible as possible. Moreover, this would make reloading `bar` only if it changed impossible, as it will be reloaded whenever `foo` is reloaded. One option we could use for now is to remove `bar` from `$LOADED_FEATURES`. That way `require 'bar'` would load it again. But now `bar` will not be reloaded unless `foo` is reloaded. A better way would be to actively reload `bar`. The example below reloads any files that where loaded and have changed. We can use `mtime` for checking if I file changed
 
-[reload\_world.ru](http://gist.github.com/549533)
+<script src="https://gist.github.com/549533.js?file=reload_world.ru"></script>
 
 Note however, that this really includes *any* files that have been loaded, even if those are in a gem or the standard library. However, those files usually do not change. Still, this approach might not be useful for bigger apps, as there are files you might not want to reload even if they changed (think initializers). In case this approach is exactly what you want, there is a Rack middleware doing exactly this: [Rack::Reloader](http://github.com/rack/rack/blob/master/lib/rack/reloader.rb). Not only does it also include error handling and has some nifty features like the ability to set a cool down phase, you probably have it already installed, as it ships with Rack. Combine it with the autoloader code from above and you got Dependencies Lite™.
 
 For smaller or well written applications this will work perfectly fine, but you will not be able to use it for a Rails or even a Sinatra app. First, instance and class variables don't get invalidated:
 
-[old\_vars.rb](http://gist.github.com/549586)
+<script src="https://gist.github.com/549586.js?file=old_vars.rb"></script>
 
 The body gets reevaluated:
 
-[double\_alias.rb](http://gist.github.com/549586)
+<script src="https://gist.github.com/549586.js?file=double_alias.rb"></script>
 
 Inheritance cannot be changed:
 
-[superclass\_mismatch.rb](http://gist.github.com/549586)
+<script src="https://gist.github.com/549586.js?file=superclass_mismatch.rb"></script>
 
 Methods and constants cannot be removed (at least not by removing them):
 
-[remove_method.rb](http://gist.github.com/549586)
+<script src="https://gist.github.com/549586.js?file=remove_method.rb"></script>
 
 While the last one is usually not a big issue, the other two make it unusable for Rails. Sinatra will keep the old routes and append the modified ones on a reload. To solve this, you can call `Sinatra::Application.reset!`. This will only work if you always reload all files. If you want to have partial reloading, try [Sinatra::Reloader](http://github.com/rkh/sinatra-reloader). But still, for your own code you should be aware of these issues. A rule of thumb: Using open classes should work just fine if you are willing to manually restart your application in case one of the above issues should occur and if you favor inheritance and mixins over `alias_method_chain`, write your files so that executing them twice does not do any harm and you avoid black magic. You probably don't if you are developing a Rails app. You probably do if you are developing a Sinatra or Rack app.
 
@@ -59,17 +59,17 @@ So, why not use this approach? As it does a lot more work under the hood (beside
 
 We can do something similar to restarting the app: Remove the old constants before reloading. That way, the old code does not survive: No old instance variables or methods lying around, aliasing works as the body will only be reloaded once per constant incarnation, and since the constant will be redefined instead of reopened on every reload, we can even change its superclass:
 
-[remove\_const.rb](http://gist.github.com/555026)
+<script src="https://gist.github.com/555026.js?file=remove_const.rb"></script>
 
 Let's try to use that:
 
-[remove\_const.ru](http://gist.github.com/555031)
+<script src="https://gist.github.com/555031.js?file=remove_const.ru"></script>
 
 The above gist also points to one of the main issues of this approach: Invalidating references. When using open classes, `Foo` always referenced the same object, it just evolved. Now `Foo` is a different object before and after each reload.
 
 If you pass `Foo` to `run`, `Rack::Builder` will use the object passed, which would remain unchanged on the next reload. By wrapping it a new constant lookup will be triggered on every request and thus changes will be picked up. It gets even worse as soon as you realize that the same goes for instances:
 
-[surviving_instances.rb](http://gist.github.com/555145)
+<script src="https://gist.github.com/555145.js?file=surviving_instances.rb"></script>
 
 This cannot be fixed entirely. However, it is possible to alleviate these problems.
 
@@ -101,9 +101,11 @@ Lies, damned lies, and statistics, so here we go. In a simple Sinatra applicatio
 
 <table>
   <thead>
-    <th> </th>
-    <th>no changes</th>
-    <th>file changed</th>
+    <tr>
+      <th> </th>
+      <th>no changes</th>
+      <th>file changed</th>
+    </tr>
   </thead>
   <tbody>
     <tr>
