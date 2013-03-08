@@ -21,7 +21,7 @@ end
 
 articles = []
 Dir.glob "articles/*.md" do |file|
-  meta, text  = File.read(file).split("\n\n", 2)
+  meta, text  = File.read(file, encoding: 'utf-8').split("\n\n", 2)
   title, date = YAML.load(meta).values_at "title", "date"
   date, slug  = Date.parse(date.to_s), "/#{file[12..-4]}"
   content     = Tilt.new(file, meta.lines.count + 2) { text }.render
