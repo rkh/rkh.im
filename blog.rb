@@ -8,7 +8,6 @@ end
 
 set :slim, :pretty => true, :layout => :blog
 set :sass, Compass.sass_engine_options
-set :projects, YAML.load_file('projects.yml')
 
 configure :production do
   sha1, date = `git log HEAD~1..HEAD --pretty=format:%h^%ci`.strip.split('^')
