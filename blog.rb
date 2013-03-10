@@ -16,6 +16,7 @@ configure :production do
   before do
     etag sha1
     last_modified date
+    cache_control :public, :must_revalidate
   end
 end
 
