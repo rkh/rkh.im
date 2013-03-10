@@ -10,7 +10,7 @@ set :slim, :pretty => true, :layout => :blog
 set :sass, Compass.sass_engine_options
 
 configure :production do
-  sha1, date = `git log HEAD~1..HEAD --pretty=format:%h^%ci`.strip.split('^')
+  sha1, date = Time.now.to_f.to_s, Time.now
   set :etag, sha1
 
   before do
