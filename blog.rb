@@ -25,7 +25,7 @@ configure :development do
 end
 
 articles = []
-Dir.glob "articles/*.md" do |file|
+Dir.glob("articles/*.md").sort.each do |file|
   meta, text  = File.read(file, encoding: 'utf-8').split("\n\n", 2)
   title, date = YAML.load(meta).values_at "title", "date"
   date, slug  = Time.parse(date.to_s), "/#{file[12..-4]}"
