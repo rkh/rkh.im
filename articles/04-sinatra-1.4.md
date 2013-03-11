@@ -95,7 +95,7 @@ In 1.4, instead of including `Sinatra::Delegator` in `Object`, it will only exte
 
 Running the above with Sinatra 1.3 and requesting `/foo.bar` will return `foo.bar`, on 1.4 it will now return `foo`.
 
-Plus sings in the URL (not in query params) will now once again be matched as plus sings, not as spaces.
+Plus signs in the URL (not in query params) will now once again be matched as plus signs, not as spaces.
 
 ### Mime-Type Parameters
 
