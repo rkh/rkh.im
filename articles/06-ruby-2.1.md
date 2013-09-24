@@ -180,15 +180,6 @@ Ruby now comes with a handy method to remove garbage bytes from strings:
 
 This has perviously such a pain to get working across Ruby implementations that I even wrote [a library](https://github.com/rkh/coder) for this.
 
-### Large, Faster Numbers for Serious Math
-
-Ruby 2.1 now supports Bignums larger than 2**1024. So you can get all your computing going.
-
-    irb(main):001:0> 2**1025 / 2**1024
-    => 2
-
-They also got a speed boost by using the [GNU Multiple Precision Arithmetic Library](http://gmplib.org/).
-
 ### StringScanner supports Named Captures
 
 `StringScanner` in the standard library is awesome. In fact, [Rails](https://github.com/rails/rails/search?q=strscan&ref=cmdform) is using it for parsing route patterns, and so will Sinatra 2.0. Check out Aaron's tutorial on [practicingruby.com](https://practicingruby.com/articles/parsing-json-the-hard-way?u=90296723ac).
@@ -228,6 +219,10 @@ For me, the above prints:
     en0: fe80::1240:f3ff:fe7e:594e%en0
     en0: 192.168.178.30
     en2: fe80::3e07:54ff:fe6f:147a%en2
+
+### Faster Numbers for Serious Math
+
+Ruby 2.1 is now faster when it comes to Bignums, as they use 128 bit integers if available. They also got an additional speed boost by using the [GNU Multiple Precision Arithmetic Library](http://gmplib.org/).
 
 ### VM changes
 
