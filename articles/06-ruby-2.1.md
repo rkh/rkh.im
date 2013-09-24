@@ -1,7 +1,7 @@
 date: 2013-09-24 17:00:00 +0200
 title: Ruby 2.1
 
-Today the first preview for Ruby 2.1 was [announced](https://www.ruby-lang.org/en/news/2013/09/23/ruby-2-1-0-preview1-is-released/). The release notes gave a first idea of what's new, but didn't go too much into detail. To find out more, you are pretty much left with diving through the Ruby issue tracker. Since I was already aware of most of these changes, I thought I'd write a quick overview post.
+Yesterday the first preview for Ruby 2.1 was [announced](https://www.ruby-lang.org/en/news/2013/09/23/ruby-2-1-0-preview1-is-released/). The release notes gave a first idea of what's new, but didn't go too much into detail. To find out more, you are pretty much left with diving through the Ruby issue tracker. Since I was already aware of most of these changes, I thought I'd write a quick overview post.
 
 Site note: Obviously Ruby 2.1 includes all the juicy Ruby 2.0 features that I'm not going to repeat in this post.
 
