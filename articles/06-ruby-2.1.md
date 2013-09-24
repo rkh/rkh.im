@@ -241,7 +241,7 @@ It basically still is. For some objects. This is hard to change due to Ruby's in
 
 However, in Ruby 2.1, the VM will classify objects as sunny or as shady, depending on whether they need to have the normal treatment or not. There are different operations that will turn a sunny object into a shady one. For instance, handing them to a C extension. Other objects, like open files, are classified shady to begin with.
 
-The sunny objects can be handled by a generational GC. Koichi Sasada gave [a talk](http://rubykaigi.org/2013/talk/S73) about this at RubyKaigi, which was live translated. Unfortunately I could only find the Japanese audio. [His slides](http://rvm.jp/~ko1/activities/RubyKaigi2013-ko1.pdf) are in English, though.
+The sunny objects can be handled by a generational GC. Koichi Sasada gave a talk about this [at RubyKaigi](http://rubykaigi.org/2013/talk/S73) and [at Euruko](http://www.ustream.tv/recorded/35107339/highlight/377033).
 
 ### Updated RubyGems
 
