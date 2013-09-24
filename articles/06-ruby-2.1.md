@@ -206,7 +206,7 @@ On Ruby 2.0 this will result in:
 
 And on Ruby 2.1:
 
-    bar
+    foo
 
 This is actually a patch I added (and I used `goto`, oh my god).
 
