@@ -57,7 +57,7 @@ Ruby 2.1 introduces the `r` suffix for decimal/rational literals to fix this:
     irb(main):002:0> 0.1r * 3
     => (3/10)
 
-### Frozen String Literal
+### Frozen String Literals
 
 When you have a string literal in your code, Ruby will create a new string literal every time that line of code is executed. This has to happen, as strings in Ruby are mutable. This is also why symbols are more efficient in many cases. However, symbols are not strings. For instance, if you want to compare some user input to a symbol, you'll either have to convert the symbol to a string or the string to a symbol. This means you either open yourself up to a denial of service attack, as symbols are not garbage collected, or you again end up with an additional string creation.
 
