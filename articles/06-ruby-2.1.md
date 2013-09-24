@@ -249,4 +249,4 @@ RubyGems has been updated to 2.2.0, which comes with a few [minor enhancements](
 
 ### Just a Preview
 
-Please be aware that todays release is just a preview and all of the above is subject to change.
+Please be aware that yesterdays release is just a preview and all of the above is subject to change.
