@@ -222,7 +222,7 @@ For me, the above prints:
 
 ### Faster Numbers for Serious Math
 
-Ruby 2.1 is now faster when it comes to Bignums, as they use 128 bit integers if available. They also got an additional speed boost by using the [GNU Multiple Precision Arithmetic Library](http://gmplib.org/).
+Ruby 2.1 is now faster when it comes to large numbers, as they use 128 bit integers for Bignum now if available. They also got an additional speed boost by using the [GNU Multiple Precision Arithmetic Library](http://gmplib.org/).
 
 ### VM changes
 
