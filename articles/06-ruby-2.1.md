@@ -93,7 +93,7 @@ This can get tedious. Fortunately, Ruby 2.1 introduces a syntax doing something 
 
 This will create a frozen string object once and then reuse it whenever the code is executed.
 
-If your taste is somewhat like mine, you probably thing it looks very strange. The reasoning is that it works like the decimal suffix explained above.
+If your taste is somewhat like mine, you probably think it looks very strange. The reasoning is that it works like the decimal suffix explained above.
 Here's a trick I found to make it look more bearable:
 
     class Foo
